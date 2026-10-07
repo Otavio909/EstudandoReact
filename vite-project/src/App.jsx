@@ -3,34 +3,18 @@ import AddTasks from "./components/AddTasks";
 import { useState } from "react";
 
 function App() {
-  const [tasks, setTasks] = useState([
-    {
-      id: 1,
-      title: "estudar programação",
-      isCompleted: false,
-      description: "estudar programação todos os dias para aprender mais",
-    },
-    {
-      id: 2,
-      title: "ir para academia",
-      isCompleted: false,
-      description: "ir para academia todos os dias para manter a forma",
-    },
-    {
-      id: 3,
-      title: "fazer minha tarefa de casa",
-      isCompleted: false,
-      description:
-        "fazer minha tarefa de casa todos os dias para manter a organização",
-    },
-  ]);
+  const [tasks, setTasks] = useState([]);
 
   function onAddTaskSubmit(title, description) {
+    if (!title.trim() || !description.trim()){
+      return alert("erro, não é possivel deixar um campo vazio")
+    }
     const newTask = {
       id: tasks.length + 1,
       title: title,
       description: description,
       isCompleted: false,
+      showDescription: false,
     };
     setTasks([...tasks, newTask]);
   }
@@ -47,12 +31,21 @@ function App() {
       }
       return task;
     });
-
     setTasks(newTasks);
   }
+
+  function onDescriptionClick(TasksId){
+    const newTasks = tasks.map((task) => {
+      if (task.id === TasksId) {
+        return { ...task, showDescription: !task.showDescription };
+      }
+      return task;
+    });
+    setTasks(newTasks);
+  }
+
   return (
-    <div className="w-screen  bg-slate-500 flex justify-center p-6">
-      {}
+    <div className="w-screen bg-slate-500 flex justify-center p-6">
       <div className="w-125 space-y-5">
         <h1 className=" w-125 text-center text-amber-50 p-4 font-bold text-2xl ">
           Gerenciador de Tarefas
@@ -62,6 +55,7 @@ function App() {
           tasks={tasks}
           onTaskClick={onTaskClick}
           onDeleteTaskClick={onDeleteTaskClick}
+          onDescriptionClick={onDescriptionClick}
         />
       </div>
     </div>

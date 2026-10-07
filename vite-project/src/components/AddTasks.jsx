@@ -14,7 +14,7 @@ function AddTasks({ onAddTaskSubmit }) {
       />
       <input
         type="text"
-        placeholder="Digite o titulo da nova tarefa"
+        placeholder="Digite a descrição da tarefa"
         className="hover:scale-105 duration-300 outline-slate-400 px-4 py-2"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
